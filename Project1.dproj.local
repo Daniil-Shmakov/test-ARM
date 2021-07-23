@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.171,C:\Users\finne\Documents\RAD Studio\Projects\Unit1.pas=C:\KOMTEK\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.924,C:\KOMTEK\Unit1.dfm=C:\KOMTEK\uOperatorForm.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.089,C:\KOMTEK\Unit1.dfm=C:\KOMTEK\uFindForm.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.433,=C:\KOMTEK\uOperatorForm.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.215,=C:\Users\finne\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.868,=C:\Users\finne\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.794,C:\KOMTEK\Unit2.dfm=C:\KOMTEK\MainForm.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.171,C:\Users\finne\Documents\RAD Studio\Projects\Unit1.dfm=C:\KOMTEK\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.887,C:\KOMTEK\uOperatorForm.dfm=C:\KOMTEK\uStatistForm.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.924,C:\KOMTEK\Unit1.pas=C:\KOMTEK\uOperatorForm.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.754,=C:\KOMTEK\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.089,C:\KOMTEK\Unit1.pas=C:\KOMTEK\uFindForm.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.400,C:\KOMTEK\uOperatorForm.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.506,C:\KOMTEK\Unit2.pas=C:\KOMTEK\DBLayer.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.563,=C:\KOMTEK\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.794,C:\KOMTEK\Unit2.pas=C:\KOMTEK\MainForm.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.397,=C:\KOMTEK\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.799,=C:\KOMTEK\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.347,C:\KOMTEK\MainForm.pas=C:\KOMTEK\uMainForm.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.887,C:\KOMTEK\uOperatorForm.pas=C:\KOMTEK\uStatistForm.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.347,C:\KOMTEK\MainForm.dfm=C:\KOMTEK\uMainForm.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.646,C:\Users\finne\Documents\RAD Studio\Projects\Project1.dproj=C:\KOMTEK\Project1.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.707,=C:\KOMTEK\uOperatorForm.pas</Transaction>
+    <Transaction>2021.07.22 22:35:54.343,=C:\KOMTEK\Unit1.pas</Transaction>
+    <Transaction>2021.07.22 22:39:51.990,C:\KOMTEK\uSertForm.pas=C:\KOMTEK\Unit1.pas</Transaction>
+    <Transaction>2021.07.22 22:39:51.991,C:\KOMTEK\uSertForm.dfm=C:\KOMTEK\Unit1.dfm</Transaction>
+    <Transaction>2021.07.22 23:15:59.636,=C:\KOMTEK\ModelSupport_Project1\default.txaPackage</Transaction>
+    <Transaction>2021.07.22 23:16:03.439,=C:\KOMTEK\ModelSupport_Project1\default.txvpck</Transaction>
+    <Transaction>2021.07.22 23:16:07.313,=C:\KOMTEK\ModelSupport_Project1\uOperatorForm\default.txvpck</Transaction>
+    <Transaction>2021.07.22 23:16:07.388,=C:\KOMTEK\ModelSupport_Project1\Project1\default.txvpck</Transaction>
+  </Transactions>
+</BorlandProject>

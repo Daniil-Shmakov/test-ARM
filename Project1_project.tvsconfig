@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<TgConfig Version="3" SubLevelDisabled="False">
+  <Option Name="namespaceFolder.uSertForm" Type="System.String" Value="" Category="General" IsBrowsable="False" />
+  <Option Name="namespaceFolder.uStatistForm" Type="System.String" Value="uStatistForm" Category="General" IsBrowsable="False" />
+</TgConfig>

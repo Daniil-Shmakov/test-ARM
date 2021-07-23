@@ -3,13 +3,19 @@ unit uMainForm;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ToolWin, Vcl.ComCtrls, Vcl.ExtCtrls;
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, Menus, uOperatorForm, uStatistForm,ActnList;
 
 type
-  TFormOperator = class(TForm)
-    StatusBar1: TStatusBar;
-    ToolBar1: TToolBar;
+  TMainForm = class(TForm)
+    MainMenu1: TMainMenu;
+    ActionList1: TActionList;
+    ArmOperator: TAction;
+    ArmStatist: TAction;
+    N1: TMenuItem;
+    N2: TMenuItem;
+    procedure ArmOperatorExecute(Sender: TObject);
+    procedure ArmStatistExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -17,10 +23,26 @@ type
   end;
 
 var
-  FormOperator: TFormOperator;
+  MainForm: TMainForm;
 
 implementation
 
 {$R *.dfm}
+
+procedure TMainForm.ArmOperatorExecute(Sender: TObject);
+var form: TForm;
+begin
+    form := TOperatorForm.Create(Application);
+    form.Show;
+    form.Visible := true;
+end;
+
+procedure TMainForm.ArmStatistExecute(Sender: TObject);
+var form: TForm;
+begin
+    form := TStatistForm.Create(self);
+    form.Show;
+    form.Visible := true;
+end;
 
 end.

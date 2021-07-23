@@ -1,20 +1,19 @@
 program Project1;
 
 uses
-  Vcl.Forms,
-  uMainForm in 'uMainForm.pas' {FormOperator},
-  uFormStatist in 'uFormStatist.pas' {FormStatist},
-  uFormOperator in 'uFormOperator.pas' {Form1},
-  uFormFind in 'uFormFind.pas' {FrmFind};
+  Forms,
+  DBLayer in 'DBLayer.pas',
+  uMainForm in 'uMainForm.pas' {MainForm},
+  uStatistForm in 'uStatistForm.pas' {StatistForm},
+  uOperatorForm in 'uOperatorForm.pas' {OperatorForm},
+  uFindForm in 'uFindForm.pas' {PersonFindForm},
+  uSertForm in 'uSertForm.pas' {AddCertForm};
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TFormOperator, FormOperator);
-  Application.CreateForm(TFormStatist, FormStatist);
-  Application.CreateForm(TForm1, Form1);
-  Application.CreateForm(TFrmFind, FrmFind);
+  Application.CreateForm(TMainForm, MainForm);
   Application.Run;
 end.
