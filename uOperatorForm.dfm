@@ -62,7 +62,6 @@ object OperatorForm: TOperatorForm
         Action = Refresh
         Align = alLeft
         TabOrder = 1
-        ExplicitLeft = 201
       end
       object FindButton: TButton
         AlignWithMargins = True

@@ -133,6 +133,10 @@ begin
     SavePerson.Enabled := false;
     PersonNameEdit.Text := '';
     PersonNameEdit.Enabled := false;
+    Cancel.Enabled := false;
+    BirthDatePick.Enabled := false;
+    CreationDatePick.Enabled := false;
+
 end;
 
 procedure TOperatorForm.FindPanelResize(Sender: TObject);
@@ -145,6 +149,7 @@ procedure TOperatorForm.RefreshExecute(Sender: TObject);
 begin
     AdoQuery1.Close;
     AdoQuery1.Open;
+    Sleep(100);
     AdoQuery2.Close;
     AdoQuery2.Open;
 end;
@@ -192,13 +197,16 @@ begin
         Query.Parameters.ParamByName('BirthDate').Value := BirthDatePick.Date;
         Query.Parameters.ParamByName('CreationDate').DataType := ftDateTime;
         Query.Parameters.ParamByName('CreationDate').Value := CreationDatePick.DateTime;
-        Query.Prepared := true;
-        Query.ExecSQL;
-        AdoQuery1.Close;
-        Sleep(100);
-        AdoQuery1.Open;
+        try
+            Query.Prepared := true;
+            Query.ExecSQL;
+            AdoQuery1.Close;
+            Sleep(100);
+            AdoQuery1.Open;
+        finally
+            FreeAndNil(Query);
+        end;
     end;
-    Query.Free;
 end;
 
 end.

@@ -5,23 +5,26 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, DB, ADODB, Grids, DBGrids;
+  Dialogs, StdCtrls, ExtCtrls, DB, ADODB, Grids, DBGrids, Buttons;
 
 type
   TPersonFindForm = class(TForm)
-    Panel1: TPanel;
+    GridPanel: TPanel;
     SearchEdit: TEdit;
-    Panel2: TPanel;
-    Label1: TLabel;
-    Panel3: TPanel;
-    SearchButton: TButton;
-    DBGrid1: TDBGrid;
-    ADOQuery1: TADOQuery;
-    DataSource1: TDataSource;
+    CaptionPanel: TPanel;
+    NameLabel: TLabel;
+    SearchPanel: TPanel;
+    ResultGrid: TDBGrid;
+    SearchADOQuery: TADOQuery;
+    DataSource: TDataSource;
+    SearchButton: TSpeedButton;
     procedure SearchButtonClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure SearchEditKeyPress(Sender: TObject; var Key: Char);
   private
-    procedure SearchQuery(name: string; Connection: TADOConnection);
-    { Private declarations }
+    Connection: TADOConnection;
+    procedure SearchQuery(name: string);
   public
     { Public declarations }
   end;
@@ -31,38 +34,61 @@ var
 
 implementation
 
-const SearchSQL = 'Select * from Persons where lower(name) like lower(:Name)';
-
 {$R *.dfm}
 
-procedure TPersonFindForm.SearchQuery(name: string; Connection: TADOConnection);
-var Query: TADOQuery;
+procedure TPersonFindForm.SearchQuery(name: string);
 begin
+    if SearchADOQuery.Active then
+        SearchADOQuery.Close;
     if Connection.Connected then
     begin
-        Query := TADOQuery.Create(nil);
-        Query.Connection := Connection;
-        Query.SQL.Add(SearchSQL);
-        Query.Parameters.ParseSQL(Query.SQL.Text, true);
+        SearchAdoQuery.Connection := Connection;
         // add '%' for correct Oracle search pattern
-        Query.Parameters.ParamByName('Name').Value := name + '%';
-        DataSource1.DataSet := Query;
-        Query.Open;
-    end;
-
+        try
+            SearchADOQuery.Parameters.ParamByName('Name').Value := name + '%';
+            try
+                DataSource.DataSet := SearchADOQuery;
+                SearchADOQuery.Open;
+            except on E: Exception do
+                MessageDlg('Ошибка выполнения поискового запроса', mtError, [mbOK], 0);
+            end;
+        except on E: Exception do
+        begin
+            MessageDlg('Возникла ошибка, свяжитесь с разработчиками', mtError, [mbOK], 0);
+        end;
+        end;
+    end
+    else
+        MessageDlg('Соединение с базой данных не установлено, проверьте настройки программы', mtError, [mbOK], 0);
 end;
 
-procedure TPersonFindForm.SearchButtonClick(Sender: TObject);
-var i: integer;
-    Query: TADOQuery;
+procedure TPersonFindForm.SpeedButton1Click(Sender: TObject);
 begin
-    for I := 0 to Self.Owner.ComponentCount-1 do
+    SearchQuery(SearchEdit.Text);
+end;
+
+procedure TPersonFindForm.FormCreate(Sender: TObject);
+var i: integer;
+begin
+    for i := 0 to Self.Owner.ComponentCount-1 do
     begin
         if Self.Owner.Components[i].ClassNameIs('TADOConnection') then
         begin
-            SearchQuery(SearchEdit.Text, Self.Owner.Components[i] as TADOConnection);
+            Connection := Self.Owner.Components[i] as TADOConnection;
         end;
     end;
+end;
+
+procedure TPersonFindForm.SearchButtonClick(Sender: TObject);
+begin
+    SearchQuery(SearchEdit.Text);
+end;
+
+procedure TPersonFindForm.SearchEditKeyPress(Sender: TObject; var Key: char);
+var s: string;
+begin
+    if ord(key) = VK_RETURN then
+        SearchQuery(SearchEdit.Text);
 end;
 
 end.
