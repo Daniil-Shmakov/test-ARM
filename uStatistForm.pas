@@ -4,74 +4,73 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, DB, ADODB, Grids, DBGrids, StdCtrls, ComCtrls, ActnList, ExtCtrls,
-  uFindForm;
+  Dialogs, uOperatorForm, ImgList, DB, ADODB, ActnList, StdCtrls, ExtCtrls,
+  ComCtrls, Grids, DBGrids, Buttons;
 
 type
-  TStatistForm = class(TForm)
-    ArmOperatopPanel: TPanel;
-    DBGrid1: TDBGrid;
-    Panel2: TPanel;
-    ActionList1: TActionList;
-    AddPerson: TAction;
-    FindPersonByBirthDate: TAction;
-    FindPersonByCreationDate: TAction;
-    DateTimePicker1: TDateTimePicker;
-    DateTimePicker2: TDateTimePicker;
-    StartPeriodText: TLabel;
-    EndPeriodtext: TLabel;
-    FindPanel: TPanel;
-    SertPanel: TPanel;
-    DBGrid2: TDBGrid;
-    DataSource1: TDataSource;
-    ADOConnection1: TADOConnection;
-    ADOTable1: TADOTable;
-    Button4: TButton;
-    Button5: TButton;
-    Find: TAction;
-    Cancel: TAction;
-    Button1: TButton;
-    Button2: TButton;
-    Button3: TButton;
-    SearchTypeText: TLabel;
-    procedure FormShow(Sender: TObject);
-    procedure FindPersonByBirthDateExecute(Sender: TObject);
-    procedure FindPersonByCreationDateExecute(Sender: TObject);
+  TStatistForm = class(TOperatorForm)
+    procedure FormCreate(Sender: TObject);
   private
+    procedure StateFinding;
+    procedure Search(SearchField: string);
     { Private declarations }
-      FindForm: TForm;
-
+  protected
+    procedure FindPersonExecute(Sender: TObject);
   public
     { Public declarations }
   end;
 
 var
-  OperatorForm: TStatistForm;
+  StatistForm: TStatistForm;
 
 implementation
 
 {$R *.dfm}
 
-procedure TStatistForm.FindPersonByBirthDateExecute(Sender: TObject);
+procedure TStatistForm.Search(SearchField: string);
+const SearchQueryByDate = 'Select * from Persons where :datetype between :date1 and :date2';
 begin
-    SearchTypeText.Caption := 'Поиск по дате рождения';
+    if PersonsQuery.Active then
+    begin
+        PersonsQuery.Close;
+        PersonsQuery.SQL.Text := SearchQueryByDate;
+        PersonsQuery.Parameters.ParseSQL(PersonsQuery.SQL.Text, true);
+        PersonsQuery.Parameters.ParamByName('datetype').Value := SearchField;
+        PersonsQuery.Parameters.ParamByName('date1').Value := ;
+        PersonsQuery.Parameters.ParamByName('datetype').Value := SearchField;
+
+
+    end;
+
+
+
 end;
 
-procedure TStatistForm.FindPersonByCreationDateExecute(Sender: TObject);
+
+
+
+procedure TStatistForm.FindPersonExecute(Sender: TObject);
+
 begin
-    SearchTypeText.Caption := 'Поиск по дате внесения данных';
+
 end;
 
-procedure TStatistForm.FormShow(Sender: TObject);
+procedure TStatistForm.FormCreate(Sender: TObject);
 begin
-    FindForm := TPersonFindForm.Create(self);
-    FindForm.Parent := FindPanel;
-    FindForm.WindowState := wsMaximized;
+    Self.Caption := 'АРМ статиста';
+    StateFinding;
+end;
 
-    FindForm.Show;
+procedure TStatistForm.StateFinding;
+begin
+    AddPerson.Visible := false;
+    AddSertificate.Visible := false;
+    SavePerson.Visible := false;
+    FindPerson.Enabled := true;
+    FindPerson.visible := true;
+    PersonNameEdit.Visible := false;
+    Refresh.Visible := false;
 
-//    AdoQuery2.ParamCheck := true;
-//    AdoQuery2.Parameters.ParseSQL(AdoQuery2.SQL.Text, true);
 end;
 
 end.

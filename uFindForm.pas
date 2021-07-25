@@ -1,11 +1,11 @@
-// returns collection of founded persons IDs
 unit uFindForm;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, DB, ADODB, Grids, DBGrids, Buttons;
+  Dialogs, StdCtrls, ExtCtrls, DB, ADODB, Grids, DBGrids, Buttons,
+  uErrorMessages, widestrutils, StrUtils;
 
 type
   TPersonFindForm = class(TForm)
@@ -36,6 +36,9 @@ implementation
 
 {$R *.dfm}
 
+const
+    CAS: WideString = 'абвгдеЄжзийклмнопрстуфхцчшщъыьэю€…÷” ≈Ќ√Ўў«’Џ‘џ¬јѕ–ќЋƒ∆Ёя„—ћ»“№Ѕё®';
+
 procedure TPersonFindForm.SearchQuery(name: string);
 begin
     if SearchADOQuery.Active then
@@ -50,16 +53,16 @@ begin
                 DataSource.DataSet := SearchADOQuery;
                 SearchADOQuery.Open;
             except on E: Exception do
-                MessageDlg('ќшибка выполнени€ поискового запроса', mtError, [mbOK], 0);
+                MessageDlg(SearchError, mtError, [mbOK], 0);
             end;
         except on E: Exception do
         begin
-            MessageDlg('¬озникла ошибка, св€житесь с разработчиками', mtError, [mbOK], 0);
+            MessageDlg(ParamError, mtError, [mbOK], 0);
         end;
         end;
     end
     else
-        MessageDlg('—оединение с базой данных не установлено, проверьте настройки программы', mtError, [mbOK], 0);
+        MessageDlg(ConnectionError, mtError, [mbOK], 0);
 end;
 
 procedure TPersonFindForm.SpeedButton1Click(Sender: TObject);
@@ -70,6 +73,7 @@ end;
 procedure TPersonFindForm.FormCreate(Sender: TObject);
 var i: integer;
 begin
+// ищем на родительской форме Connection и используем его дл€ коннекта к Ѕƒ
     for i := 0 to Self.Owner.ComponentCount-1 do
     begin
         if Self.Owner.Components[i].ClassNameIs('TADOConnection') then
@@ -86,9 +90,18 @@ end;
 
 procedure TPersonFindForm.SearchEditKeyPress(Sender: TObject; var Key: char);
 var s: string;
+var LA: set of Char;
+    CA: array [0..255] of char;
 begin
+    // старт поиска по нажатию Enter
     if ord(key) = VK_RETURN then
         SearchQuery(SearchEdit.Text);
+    // считаем, что в фамили€х пациентов цифр и спец. символов быть не должно
+    // только латиница (под вопросом) и кириллица
+    // Latin alphabet
+    LA := ['A'..'z'] + ['-'];
+    if not ((Key in LA) or (containsStr(CAS, Key)) or (Key = chr(VK_BACK))) then
+        Key := #0;
 end;
 
 end.

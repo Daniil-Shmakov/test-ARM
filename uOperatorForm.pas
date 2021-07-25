@@ -5,57 +5,63 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, DB, ADODB, Grids, DBGrids, StdCtrls, ComCtrls, ActnList, ExtCtrls,
-  uSertForm, uFindForm;
+  uСertForm, uFindForm, ImgList, Buttons, uErrorMessages;
 
 type
   TOperatorForm = class(TForm)
     ArmOperatopPanel: TPanel;
     PersonsGrid: TDBGrid;
-    Panel2: TPanel;
+    ButtonPanel: TPanel;
     ActionList: TActionList;
     AddPerson: TAction;
     FindPerson: TAction;
     AddSertificate: TAction;
-    AddButton: TButton;
-    AddCertButton: TButton;
-    FindButton: TButton;
-    PersonNameEdit: TEdit;
     BirthDatePick: TDateTimePicker;
     CreationDatePick: TDateTimePicker;
-    Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
-    SaveButton: TButton;
     SavePerson: TAction;
     FindPanel: TPanel;
-    DataSource1: TDataSource;
-    ADOConnection1: TADOConnection;
-    ADOQuery1: TADOQuery;
-    ADOQuery2: TADOQuery;
-    DataSource2: TDataSource;
+    PersonsDataSource: TDataSource;
+    Connection: TADOConnection;
+    PersonsQuery: TADOQuery;
+    CertQuery: TADOQuery;
+    CertDataSource: TDataSource;
     SertPanel: TPanel;
     EditPanel: TPanel;
     CertificatesGrid: TDBGrid;
-    Panel1: TPanel;
+    CertCaptionPanel: TPanel;
     Refresh: TAction;
-    CancelButton: TButton;
     Cancel: TAction;
-    Button2: TButton;
+    SpeedButton1: TSpeedButton;
+    ImageList1: TImageList;
+    SpeedButton3: TSpeedButton;
+    SpeedButton4: TSpeedButton;
+    SpeedButton5: TSpeedButton;
+    SpeedButton6: TSpeedButton;
+    SpeedButton7: TSpeedButton;
+    PersonNameEdit: TLabeledEdit;
+    ShowCertificate: TAction;
+    SpeedButton2: TSpeedButton;
+    ARMspecificPanel: TPanel;
     procedure FormShow(Sender: TObject);
     procedure AddPersonExecute(Sender: TObject);
-    procedure FindPersonExecute(Sender: TObject);
+    procedure FindPersonExecute(Sender: TObject); virtual;
     procedure AddSertificateExecute(Sender: TObject);
     procedure SavePersonExecute(Sender: TObject);
-    procedure ADOQuery1AfterScroll(DataSet: TDataSet);
+    procedure PersonsQueryAfterScroll(DataSet: TDataSet);
     procedure RefreshExecute(Sender: TObject);
     procedure FormResize(Sender: TObject);
-    procedure FindPanelResize(Sender: TObject);
     procedure CancelExecute(Sender: TObject);
+    procedure ShowCertificateExecute(Sender: TObject);
   private
+    { Private declarations }
+  protected
     FindForm: TForm;
     procedure AddCertToDatabase(title, text: string);
+    procedure StateAdding; virtual;
+    procedure StateViewing; virtual;
 
-    { Private declarations }
   public
     { Public declarations }
   end;
@@ -70,30 +76,27 @@ implementation
 // preparing to add person to database
 procedure TOperatorForm.AddPersonExecute(Sender: TObject);
 begin
-    PersonNameEdit.Enabled := true;
-    PersonNameEdit.Text := '';
-    BirthDatePick.Enabled := true;
-    CreationDatePick.Enabled := true;
-    CreationDatePick.DateTime := Now;
-    SavePerson.Enabled := true;
+    StateAdding;
 end;
 
+// AddCertificate to selected person
 procedure TOperatorForm.AddSertificateExecute(Sender: TObject);
 var F: TForm;
     Title, Text: string;
 begin
-    // AddCertificate to Person
     F := TAddCertForm.Create(self);
+    TAddCertForm(F).PatientNameLabel.Caption :=
+        PersonsDataSource.DataSet.FieldByName('Name').AsString;
     if F.ShowModal = mrOK then
     begin
-        Title := (F as TAddCertForm).Edit1.Text;
-        Text := (F as TAddCertForm).Memo1.Lines.Text;
+        Title := (F as TAddCertForm).TitleEdit.Text;
+        Text := (F as TAddCertForm).ContentsMemo.Lines.Text;
         AddCertToDatabase(Title, Text);
+        RefreshExecute(self);
     end;
-
-
 end;
 
+// Adding Certificate record to database
 procedure TOperatorForm.AddCertToDatabase(title, text: string);
 const InsertSQL = 'Insert into Certificates (Certificate_name, Certificate_text, ' +
                   'creationdate, person_ID) ' +
@@ -103,55 +106,54 @@ begin
     Query := TADOQuery.Create(nil);
     Query.ParamCheck := true;
     Query.SQL.Add(InsertSQL);
-    Query.Connection := AdoConnection1;
+    Query.Connection := Connection;
     Query.Parameters.ParseSQL(Query.SQL.Text, true);
-
-    Query.Parameters.ParamByName('name').Value := title;
-    Query.Parameters.ParamByName('text').Value := text;
-    Query.Parameters.ParamByName('CDate').DataType := ftDateTime;
-    Query.Parameters.ParamByName('CDate').Value := Now;
-    Query.Parameters.ParamByName('Person_ID').Value := AdoQuery1.FieldByName('ID').Value;
-//        Param.DataType := TDataType.ftDatetime;
-//        Param.Value := DateTimePicker2.DateTime;
-
-    Query.Prepared := true;
-    Query.ExecSQL;
-//    Query.Connection.CommitTrans;
-
-    Query.Free;
+    // а вдруг что не так с параметрами
+    try
+        Query.Parameters.ParamByName('name').Value := title;
+        Query.Parameters.ParamByName('text').Value := text;
+        Query.Parameters.ParamByName('CDate').DataType := ftDateTime;
+        Query.Parameters.ParamByName('CDate').Value := Now;
+        Query.Parameters.ParamByName('Person_ID').Value := PersonsQuery.FieldByName('ID').Value;
+        Query.Prepared := true;
+    except on E: Exception do
+    begin
+        MessageDlg(ParamError, mtError, [mbOK], 0);
+        FreeAndNil(Query);
+        Exit;
+    end;
+    end;
+    try
+        Query.ExecSQL;
+    except on E: Exception do
+        MessageDlg(DBWriteError, mtError, [mbOK], 0);
+    end;
+    FreeAndNil(Query);
 end;
 
-procedure TOperatorForm.ADOQuery1AfterScroll(DataSet: TDataSet);
+//
+procedure TOperatorForm.PersonsQueryAfterScroll(DataSet: TDataSet);
 begin
-    AdoQuery2.Close;
-    AdoQuery2.Parameters.ParamByName('Person_ID').Value := AdoQuery1.FieldByName('ID').Value;
-    AdoQuery2.Open;
+    CertQuery.Close;
+    CertQuery.Parameters.ParamByName('Person_ID').Value := PersonsQuery.FieldByName('ID').Value;
+    CertQuery.Open;
 end;
 
 procedure TOperatorForm.CancelExecute(Sender: TObject);
 begin
-    SavePerson.Enabled := false;
-    PersonNameEdit.Text := '';
-    PersonNameEdit.Enabled := false;
-    Cancel.Enabled := false;
-    BirthDatePick.Enabled := false;
-    CreationDatePick.Enabled := false;
-
-end;
-
-procedure TOperatorForm.FindPanelResize(Sender: TObject);
-begin
-    if Assigned(FindForm) then
-        FindForm.WindowState := wsMaximized;
+    StateViewing;
 end;
 
 procedure TOperatorForm.RefreshExecute(Sender: TObject);
+var CurrentID: integer;
 begin
-    AdoQuery1.Close;
-    AdoQuery1.Open;
+    CurrentID := PersonsDataSource.DataSet.FieldByName('ID').AsInteger;
+    PersonsQuery.Close;
+    PersonsQuery.Open;
+    PersonsDataSource.DataSet.Locate('ID', CurrentID, []);
     Sleep(100);
-    AdoQuery2.Close;
-    AdoQuery2.Open;
+    CertQuery.Close;
+    CertQuery.Open;
 end;
 
 procedure TOperatorForm.FindPersonExecute(Sender: TObject);
@@ -171,11 +173,10 @@ begin
     FindForm := TPersonFindForm.Create(self);
     FindForm.Parent := FindPanel;
     FindForm.WindowState := wsMaximized;
-
     FindForm.Show;
-
-    AdoQuery2.ParamCheck := true;
-    AdoQuery2.Parameters.ParseSQL(AdoQuery2.SQL.Text, true);
+    CertQuery.ParamCheck := true;
+    CertQuery.Parameters.ParseSQL(CertQuery.SQL.Text, true);
+    StateViewing;
 end;
 
 procedure TOperatorForm.SavePersonExecute(Sender: TObject);
@@ -185,12 +186,12 @@ var Query: TADOQuery;
     Param: TParameter;
 begin
     // Save to DB
-    if ADOConnection1.Connected then
+    if Connection.Connected then
     begin
         Query := TADOQuery.Create(nil);
         Query.ParamCheck := true;
         Query.SQL.Add(InsertSQL);
-        Query.Connection := AdoConnection1;
+        Query.Connection := Connection;
         Query.Parameters.ParseSQL(Query.SQL.Text, true);
         Query.Parameters.ParamByName('Name').Value := PersonNameEdit.Text;
         Query.Parameters.ParamByName('BirthDate').DataType := TDataType.ftDate;
@@ -200,13 +201,54 @@ begin
         try
             Query.Prepared := true;
             Query.ExecSQL;
-            AdoQuery1.Close;
+            PersonsQuery.Close;
             Sleep(100);
-            AdoQuery1.Open;
+            PersonsQuery.Open;
+            StateViewing;
         finally
             FreeAndNil(Query);
         end;
     end;
+end;
+
+procedure TOperatorForm.ShowCertificateExecute(Sender: TObject);
+var F: TAddCertForm;
+    Title, Text: string;
+begin
+    F := TAddCertForm.Create(self);
+    F.Caption := 'Просмотр справки';
+    F.PatientNameLabel.Caption :=
+        PersonsDataSource.DataSet.FieldByName('Name').AsString;
+    F.TitleEdit.Text := CertDataSource.DataSet.FieldByName('Certificate_name').AsString;
+    F.TitleEdit.ReadOnly := true;
+    F.ContentsMemo.Lines.Text := CertDataSource.DataSet.FieldByName('Certificate_text').AsString;
+    F.ContentsMemo.ReadOnly := true;
+    if F.ShowModal = mrOK then
+        Exit;
+end;
+
+// переходим в "режим добавления" - включаем нужные элементы
+procedure TOperatorForm.StateAdding;
+begin
+    SavePerson.Enabled := true;
+    Cancel.Enabled := true;
+    PersonNameEdit.Text := '';
+    PersonNameEdit.Enabled := true;
+    BirthDatePick.Enabled := true;
+    CreationDatePick.Enabled := true;
+    AddPerson.Enabled := false;
+end;
+
+// возвращем элементы в "режим просмотра" - отключаем ненужное
+procedure TOperatorForm.StateViewing;
+begin
+    SavePerson.Enabled := false;
+    Cancel.Enabled := false;
+    PersonNameEdit.Text := '';
+    PersonNameEdit.Enabled := false;
+    BirthDatePick.Enabled := false;
+    CreationDatePick.Enabled := false;
+    AddPerson.Enabled := true;
 end;
 
 end.

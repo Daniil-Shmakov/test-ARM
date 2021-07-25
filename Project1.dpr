@@ -4,10 +4,11 @@ uses
   Forms,
   DBLayer in 'DBLayer.pas',
   uMainForm in 'uMainForm.pas' {MainForm},
-  uStatistForm in 'uStatistForm.pas' {StatistForm},
   uOperatorForm in 'uOperatorForm.pas' {OperatorForm},
   uFindForm in 'uFindForm.pas' {PersonFindForm},
-  uSertForm in 'uSertForm.pas' {AddCertForm};
+  u—ertForm in 'u—ertForm.pas' {AddCertForm},
+  uErrorMessages in 'uErrorMessages.pas',
+  uStatistForm in 'uStatistForm.pas' {Form1};
 
 {$R *.res}
 

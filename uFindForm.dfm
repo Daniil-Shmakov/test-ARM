@@ -121,7 +121,7 @@ object PersonFindForm: TPersonFindForm
           Expanded = False
           FieldName = 'Name'
           Title.Caption = #1060#1048#1054' '#1087#1072#1094#1080#1077#1085#1090#1072
-          Width = 320
+          Width = 338
           Visible = True
         end
         item
@@ -154,8 +154,6 @@ object PersonFindForm: TPersonFindForm
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 1
-    ExplicitLeft = 8
-    ExplicitTop = -1
   end
   object SearchADOQuery: TADOQuery
     Parameters = <

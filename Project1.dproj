@@ -48,17 +48,18 @@
 			<DCCReference Include="uMainForm.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
-			<DCCReference Include="uStatistForm.pas">
-				<Form>StatistForm</Form>
-			</DCCReference>
 			<DCCReference Include="uOperatorForm.pas">
 				<Form>OperatorForm</Form>
 			</DCCReference>
 			<DCCReference Include="uFindForm.pas">
 				<Form>PersonFindForm</Form>
 			</DCCReference>
-			<DCCReference Include="uSertForm.pas">
+			<DCCReference Include="uСertForm.pas">
 				<Form>AddCertForm</Form>
+			</DCCReference>
+			<DCCReference Include="uErrorMessages.pas"/>
+			<DCCReference Include="uStatistForm.pas">
+				<Form>Form1</Form>
 			</DCCReference>
 			<None Include="ModelSupport_Project1\default.txaPackage"/>
 			<None Include="ModelSupport_Project1\default.txvpck"/>

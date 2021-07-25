@@ -2,9 +2,11 @@ object MainForm: TMainForm
   Left = 0
   Top = 0
   Caption = #1040#1056#1052
-  ClientHeight = 574
-  ClientWidth = 998
+  ClientHeight = 662
+  ClientWidth = 1008
   Color = clBtnFace
+  Constraints.MinHeight = 680
+  Constraints.MinWidth = 980
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
