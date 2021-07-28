@@ -2,9 +2,9 @@ object AddCertForm: TAddCertForm
   Left = 0
   Top = 0
   BorderStyle = bsSingle
-  Caption = 'AddCertForm'
+  Caption = #1053#1086#1074#1072#1103' '#1089#1087#1088#1072#1074#1082#1072
   ClientHeight = 323
-  ClientWidth = 650
+  ClientWidth = 557
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object AddCertForm: TAddCertForm
   object NamePanel: TPanel
     Left = 0
     Top = 0
-    Width = 650
+    Width = 557
     Height = 49
     Align = alTop
     TabOrder = 0
@@ -53,7 +53,7 @@ object AddCertForm: TAddCertForm
   object SearchPanel: TPanel
     Left = 0
     Top = 49
-    Width = 650
+    Width = 557
     Height = 274
     Align = alClient
     Caption = 'SearchPanel'
@@ -104,7 +104,7 @@ object AddCertForm: TAddCertForm
     object ButtonPanel: TPanel
       Left = 1
       Top = 232
-      Width = 648
+      Width = 555
       Height = 41
       Align = alBottom
       BevelOuter = bvNone
@@ -112,7 +112,7 @@ object AddCertForm: TAddCertForm
       ExplicitTop = 222
       ExplicitWidth = 590
       object SpeedButton1: TSpeedButton
-        Left = 571
+        Left = 478
         Top = 0
         Width = 77
         Height = 41
@@ -124,7 +124,7 @@ object AddCertForm: TAddCertForm
         ExplicitHeight = 39
       end
       object SpeedButton2: TSpeedButton
-        Left = 483
+        Left = 390
         Top = 0
         Width = 88
         Height = 41
@@ -139,8 +139,8 @@ object AddCertForm: TAddCertForm
   end
   object ActionList1: TActionList
     Images = ImageList1
-    Left = 584
-    Top = 200
+    Left = 488
+    Top = 192
     object OKAction: TAction
       Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100
       ImageIndex = 1
@@ -153,8 +153,8 @@ object AddCertForm: TAddCertForm
     end
   end
   object ImageList1: TImageList
-    Left = 568
-    Top = 56
+    Left = 472
+    Top = 80
     Bitmap = {
       494C010102000800140010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010

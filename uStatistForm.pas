@@ -4,73 +4,118 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, uOperatorForm, ImgList, DB, ADODB, ActnList, StdCtrls, ExtCtrls,
-  ComCtrls, Grids, DBGrids, Buttons;
+  Dialogs, uBaseForm, ImgList, DB, ADODB, ActnList, Grids, DBGrids, Buttons,
+  ExtCtrls, StdCtrls, ComCtrls, uResources;
+
+type TSearchType = (stBirthdate, stCreationdate);
 
 type
-  TStatistForm = class(TOperatorForm)
-    procedure FormCreate(Sender: TObject);
+  TStatistForm = class(TBaseForm)
+    RadioGroup1: TRadioGroup;
+    StartDatePick: TDateTimePicker;
+    EndDatePick: TDateTimePicker;
+    SearchByBirthdate: TAction;
+    SearchByCreationday: TAction;
+    Label1: TLabel;
+    Label2: TLabel;
+    procedure AcceptExecute(Sender: TObject); override;
+    procedure SearchByBirthdateExecute(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
-    procedure StateFinding;
-    procedure Search(SearchField: string);
-    { Private declarations }
-  protected
-    procedure FindPersonExecute(Sender: TObject);
+    procedure Search(DateParam: string);
   public
     { Public declarations }
+    procedure StateAdding; override;
+    procedure StateViewing; override;
+    procedure SetConnectionString(ConnString: string); override;
   end;
-
-var
-  StatistForm: TStatistForm;
 
 implementation
 
 {$R *.dfm}
 
-procedure TStatistForm.Search(SearchField: string);
-const SearchQueryByDate = 'Select * from Persons where :datetype between :date1 and :date2';
+const SearchQuery = 'select ID, name, to_char(birthdate, ''dd.mm.yyyy'') as birthdate, ' +
+    ' to_char(creationdate, ''dd.mm.yyyy'') as creationdate from persons where %s ' +
+    ' between :StartPeriod and :EndPeriod';
+
+
+{ TStatistForm }
+
+procedure TStatistForm.FormShow(Sender: TObject);
 begin
-    if PersonsQuery.Active then
-    begin
-        PersonsQuery.Close;
-        PersonsQuery.SQL.Text := SearchQueryByDate;
-        PersonsQuery.Parameters.ParseSQL(PersonsQuery.SQL.Text, true);
-        PersonsQuery.Parameters.ParamByName('datetype').Value := SearchField;
-        PersonsQuery.Parameters.ParamByName('date1').Value := ;
-        PersonsQuery.Parameters.ParamByName('datetype').Value := SearchField;
+    PersonsQuery.SQL.Text := SearchQuery;
+    PersonsQuery.Connection := Connection;
+    CertQuery.ParamCheck := true;
+    CertQuery.Parameters.ParseSQL(CertQuery.SQL.Text, true);
+    CertQuery.Connection := Connection;
+    CertQuery.Close;
+    inherited;
+//    try
+//        PersonsQuery.Close;
+//        PersonsQuery.Open;
+//    except on E: EADOError do
+//        MessageDlg(SearchError, mtError, [mbOK], 0);
+//    end;
+end;
 
-
+procedure TStatistForm.Search(Dateparam: string);
+begin
+    PersonsQuery.SQL.Text := format(SearchQuery, [Dateparam]);
+    PersonsQuery.Connection := Connection;
+    PersonsQuery.Parameters.ParseSQL(PersonsQuery.SQL.Text, true);
+    PersonsQuery.Parameters.ParamByName('StartPeriod').DataType := ftDate;
+    PersonsQuery.Parameters.ParamByName('StartPeriod').Value := StartDatePick.Date;
+    PersonsQuery.Parameters.ParamByName('EndPeriod').DataType := ftDate;
+    PersonsQuery.Parameters.ParamByName('EndPeriod').Value := EndDatePick.Date;
+    PersonsQuery.Prepared := true;
+    try
+        PersonsQuery.Open;
+    Except on E: Exception do
+        MessageDlg(SearchError, mtError, [mbOK], 0);
     end;
-
-
-
 end;
 
-
-
-
-procedure TStatistForm.FindPersonExecute(Sender: TObject);
-
+procedure TStatistForm.SearchByBirthdateExecute(Sender: TObject);
 begin
-
+    Search('Birthdate');
 end;
 
-procedure TStatistForm.FormCreate(Sender: TObject);
+procedure TStatistForm.AcceptExecute(Sender: TObject);
+var Searchtype: string;
 begin
-    Self.Caption := 'АРМ статиста';
-    StateFinding;
+    if RadioGroup1.ItemIndex = 0 then
+        Searchtype := 'Birthdate';
+    if RadioGroup1.ItemIndex = 1 then
+        Searchtype := 'Creationdate';
+    if RadioGroup1.ItemIndex = -1 then 
+    begin
+      ShowMessage('не выбран критерий поиска');
+      Exit;
+    end;
+    Search(searchtype);
 end;
 
-procedure TStatistForm.StateFinding;
+procedure TStatistForm.StateAdding;
 begin
-    AddPerson.Visible := false;
-    AddSertificate.Visible := false;
-    SavePerson.Visible := false;
-    FindPerson.Enabled := true;
-    FindPerson.visible := true;
-    PersonNameEdit.Visible := false;
-    Refresh.Visible := false;
+    inherited;
+end;
 
+procedure TStatistForm.StateViewing;
+begin
+    ButtonPanel.Visible := false;
+    Cancel.Visible := false;
+    Accept.Caption := 'Поиск';
+end;
+
+procedure TStatistForm.SetConnectionString(ConnString: string);
+begin
+    Connection.ConnectionString := ConnString;
+    Connection.LoginPrompt := false;
+    try
+        Connection.Connected := true;
+    except on E: Exception do 
+        MessageDlg(ConnectionError, mtError, [mbOk], 0);          
+    end;
 end;
 
 end.

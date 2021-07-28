@@ -1,5 +1,5 @@
 
-fugue-icons-3.5.6/bonus/animated/icons-24/terminal.gif
+fugue-icons-3.5.6/**
 *.gif
 *.png
 Project1.identcache
@@ -8,3 +8,11 @@ readme.txt
 Project1.identcache
 fugue-icons-3.5.6/CHANGELOG.txt
 fugue-icons-3.5.6/FILENAME.txt
+__history/**
+Debug/**
+operFormPersonsQuery.txt
+1/**
+ARM.dproj.local
+given_sert_table.sql
+ModelSupport_ARM/**
+SQL.sql

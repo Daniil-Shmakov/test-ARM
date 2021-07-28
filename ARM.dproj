@@ -2,7 +2,7 @@
 		<PropertyGroup>
 			<ProjectGuid>{BAC3911D-AB30-4E6B-8006-FBD8EA0C5EF0}</ProjectGuid>
 			<ProjectVersion>12.3</ProjectVersion>
-			<MainSource>Project1.dpr</MainSource>
+			<MainSource>ARM.dpr</MainSource>
 			<Base>True</Base>
 			<Config Condition="'$(Config)'==''">Debug</Config>
 			<Platform>Win32</Platform>
@@ -41,15 +41,14 @@
 			<DCC_DebugInformation>false</DCC_DebugInformation>
 		</PropertyGroup>
 		<ItemGroup>
-			<DelphiCompile Include="Project1.dpr">
+			<DelphiCompile Include="ARM.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="DBLayer.pas"/>
 			<DCCReference Include="uMainForm.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
-			<DCCReference Include="uOperatorForm.pas">
-				<Form>OperatorForm</Form>
+			<DCCReference Include="uBaseForm.pas">
+				<Form>BaseForm</Form>
 			</DCCReference>
 			<DCCReference Include="uFindForm.pas">
 				<Form>PersonFindForm</Form>
@@ -57,14 +56,41 @@
 			<DCCReference Include="uСertForm.pas">
 				<Form>AddCertForm</Form>
 			</DCCReference>
-			<DCCReference Include="uErrorMessages.pas"/>
-			<DCCReference Include="uStatistForm.pas">
-				<Form>Form1</Form>
+			<DCCReference Include="uResources.pas"/>
+			<DCCReference Include="uOperatorForm.pas">
+				<Form>OperatorForm</Form>
 			</DCCReference>
-			<None Include="ModelSupport_Project1\default.txaPackage"/>
-			<None Include="ModelSupport_Project1\default.txvpck"/>
-			<None Include="ModelSupport_Project1\uOperatorForm\default.txvpck"/>
-			<None Include="ModelSupport_Project1\Project1\default.txvpck"/>
+			<DCCReference Include="uStatistForm.pas">
+				<Form>StatistForm</Form>
+			</DCCReference>
+			<DCCReference Include="uConnectForm.pas">
+				<Form>ConnectForm</Form>
+			</DCCReference>
+			<DCCReference Include="uArmChoice.pas">
+				<Form>ArmChoice</Form>
+			</DCCReference>
+			<None Include="ModelSupport_ARM\default.txaPackage"/>
+			<None Include="ModelSupport_ARM\default.txvpck"/>
+			<None Include="ModelSupport_ARM\uСertForm\default.txvpck"/>
+			<None Include="ModelSupport_ARM\uStatistForm\default.txvpck"/>
+			<None Include="ModelSupport_ARM\uResources\default.txaPackage"/>
+			<None Include="ModelSupport_ARM\uOperatorForm\default.txvpck"/>
+			<None Include="ModelSupport_ARM\Unit1\default.txaPackage"/>
+			<None Include="ModelSupport_ARM\Unit1\default.txvpck"/>
+			<None Include="ModelSupport_ARM\uMainForm\default.txvpck"/>
+			<None Include="ModelSupport_ARM\uFindForm\default.txvpck"/>
+			<None Include="ModelSupport_ARM\uErrorMessages\default.txvpck"/>
+			<None Include="ModelSupport_ARM\uBaseForm\default.txaPackage"/>
+			<None Include="ModelSupport_ARM\uBaseForm\default.txvpck"/>
+			<None Include="ModelSupport_ARM\Project1\default.txvpck"/>
+			<None Include="ModelSupport_ARM\DBLayer\default.txvpck"/>
+			<None Include="ModelSupport_ARM\uResources\default.txvpck"/>
+			<None Include="ModelSupport_ARM\uConnectForm\default.txvpck"/>
+			<None Include="ModelSupport_ARM\ARM\default.txvpck"/>
+			<None Include="ModelSupport_ARM\uArmChoice\default.txvpck"/>
+			<None Include="ModelSupport_ARM\uArmChoice\default.txaPackage"/>
+			<None Include="ModelSupport_ARM\uConnectForm\default.txaPackage"/>
+			<None Include="ModelSupport_ARM\ARM\default.txaPackage"/>
 			<BuildConfiguration Include="Release">
 				<Key>Cfg_2</Key>
 				<CfgParent>Base</CfgParent>
@@ -116,7 +142,7 @@
 						<Excluded_Packages Name="$(BDSBIN)\dclofficexp150.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
 					</Excluded_Packages>
 					<Source>
-						<Source Name="MainSource">Project1.dpr</Source>
+						<Source Name="MainSource">ARM.dpr</Source>
 					</Source>
 				</Delphi.Personality>
 				<Platforms>

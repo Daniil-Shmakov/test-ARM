@@ -40,8 +40,6 @@ implementation
 
 {$R *.dfm}
 
-
-
 procedure TAddCertForm.CancelActionExecute(Sender: TObject);
 begin
     ModalResult := mrCancel;
@@ -60,7 +58,7 @@ end;
 
 procedure TAddCertForm.TitleEditChange(Sender: TObject);
 begin
-        OKAction.Enabled := true;
+    OKAction.Enabled := true;
 end;
 
 

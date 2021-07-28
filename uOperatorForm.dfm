@@ -1,228 +1,13 @@
-object OperatorForm: TOperatorForm
-  Left = 0
-  Top = 0
+inherited OperatorForm: TOperatorForm
   Caption = #1040#1056#1052' '#1086#1087#1077#1088#1072#1090#1086#1088#1072
-  ClientHeight = 582
-  ClientWidth = 934
-  Color = clBtnFace
-  Constraints.MinHeight = 620
-  Constraints.MinWidth = 920
-  Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Tahoma'
-  Font.Style = []
-  FormStyle = fsMDIChild
-  OldCreateOrder = False
-  Position = poMainFormCenter
-  Visible = True
-  OnResize = FormResize
-  OnShow = FormShow
+  Visible = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object ArmOperatopPanel: TPanel
-    Left = 0
-    Top = 202
-    Width = 934
-    Height = 380
-    Align = alBottom
-    Caption = 'ArmOperatopPanel'
-    TabOrder = 0
-    object ButtonPanel: TPanel
-      Left = 1
-      Top = 1
-      Width = 932
-      Height = 44
-      Align = alTop
-      TabOrder = 0
-      object SpeedButton1: TSpeedButton
-        Left = 795
-        Top = 1
-        Width = 136
-        Height = 42
-        Action = ShowCertificate
-        Align = alRight
-        Flat = True
-        ExplicitLeft = 457
-      end
-      object SpeedButton3: TSpeedButton
-        Left = 121
-        Top = 1
-        Width = 128
-        Height = 42
-        Action = AddSertificate
-        Align = alLeft
-        Flat = True
-        ExplicitHeight = 47
-      end
-      object SpeedButton4: TSpeedButton
-        Left = 249
-        Top = 1
-        Width = 104
-        Height = 42
-        Action = FindPerson
-        Align = alLeft
-        Flat = True
-        ExplicitLeft = 255
-        ExplicitTop = 4
-        ExplicitHeight = 47
-      end
-      object SpeedButton7: TSpeedButton
-        Left = 1
-        Top = 1
-        Width = 120
-        Height = 42
-        Action = AddPerson
-        Align = alLeft
-        Flat = True
-        ExplicitLeft = 120
-        ExplicitTop = 5
-        ExplicitHeight = 47
-      end
-      object SpeedButton2: TSpeedButton
-        Left = 353
-        Top = 1
-        Width = 104
-        Height = 42
-        Action = Refresh
-        Align = alLeft
-        Flat = True
-        ExplicitLeft = 359
-        ExplicitTop = 4
-      end
-    end
-    object SertPanel: TPanel
-      Left = 544
-      Top = 45
-      Width = 389
-      Height = 334
-      Align = alClient
-      Caption = 'SertPanel'
-      TabOrder = 1
-      ExplicitTop = 50
-      ExplicitHeight = 323
-      object CertificatesGrid: TDBGrid
-        Left = 1
-        Top = 29
-        Width = 387
-        Height = 304
-        Align = alClient
-        DataSource = CertDataSource
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
-        ReadOnly = True
-        TabOrder = 0
-        TitleFont.Charset = DEFAULT_CHARSET
-        TitleFont.Color = clWindowText
-        TitleFont.Height = -11
-        TitleFont.Name = 'Tahoma'
-        TitleFont.Style = []
-        OnDblClick = ShowCertificateExecute
-        Columns = <
-          item
-            Expanded = False
-            FieldName = 'Certificate_name'
-            ReadOnly = False
-            Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
-            Width = 108
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'Certificate_Text'
-            Title.Caption = #1057#1086#1076#1077#1088#1078#1072#1085#1080#1077
-            Width = 134
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'Creationdate'
-            Title.Caption = #1044#1072#1090#1072' '#1074#1099#1076#1072#1095#1080
-            Width = 116
-            Visible = True
-          end>
-      end
-      object CertCaptionPanel: TPanel
-        Left = 1
-        Top = 1
-        Width = 387
-        Height = 28
-        Align = alTop
-        Caption = #1057#1087#1080#1089#1086#1082' '#1074#1099#1076#1072#1085#1085#1099#1093' '#1089#1087#1088#1072#1074#1086#1082
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 1
-      end
-    end
-    object EditPanel: TPanel
-      Left = 1
-      Top = 45
-      Width = 543
-      Height = 334
-      Align = alLeft
-      Caption = 'EditPanel'
-      TabOrder = 2
-      ExplicitTop = 50
-      ExplicitHeight = 323
-      object PersonsGrid: TDBGrid
-        Left = 1
-        Top = 101
-        Width = 541
-        Height = 232
-        Align = alBottom
-        DataSource = PersonsDataSource
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
-        ReadOnly = True
-        TabOrder = 0
-        TitleFont.Charset = DEFAULT_CHARSET
-        TitleFont.Color = clWindowText
-        TitleFont.Height = -11
-        TitleFont.Name = 'Tahoma'
-        TitleFont.Style = []
-        Columns = <
-          item
-            Expanded = False
-            FieldName = 'ID'
-            Title.Caption = #8470' '#1087'/'#1087
-            Width = 40
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'NAME'
-            Title.Caption = #1060#1048#1054
-            Width = 237
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'BIRTHDATE'
-            Title.Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103
-            Width = 116
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'CREATIONDATE'
-            Title.Caption = #1044#1072#1090#1072' '#1074#1085#1077#1089#1077#1085#1080#1103
-            Visible = True
-          end>
-      end
-      object ARMspecificPanel: TPanel
-        Left = 1
-        Top = 1
-        Width = 541
-        Height = 100
-        Align = alClient
-        TabOrder = 1
-        ExplicitLeft = 96
-        ExplicitTop = 32
-        ExplicitWidth = 185
-        ExplicitHeight = 41
-        object Label2: TLabel
+  inherited ArmOperatopPanel: TPanel
+    inherited EditPanel: TPanel
+      inherited ARMspecificPanel: TPanel
+        object BirthdateLabel: TLabel
           Left = 10
           Top = 40
           Width = 95
@@ -235,12 +20,12 @@ object OperatorForm: TOperatorForm
           Font.Style = [fsBold]
           ParentFont = False
         end
-        object Label3: TLabel
-          Left = 8
-          Top = 74
-          Width = 97
+        object CreationdateLabel: TLabel
+          Left = 10
+          Top = 67
+          Width = 94
           Height = 13
-          Caption = #1044#1072#1090#1072' '#1079#1072#1085#1077#1089#1077#1085#1080#1103' '
+          Caption = #1044#1072#1090#1072' '#1079#1072#1085#1077#1089#1077#1085#1080#1103
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -248,47 +33,12 @@ object OperatorForm: TOperatorForm
           Font.Style = [fsBold]
           ParentFont = False
         end
-        object SpeedButton5: TSpeedButton
-          Left = 336
-          Top = 53
-          Width = 97
-          Height = 42
-          Action = SavePerson
-          Flat = True
-        end
-        object SpeedButton6: TSpeedButton
-          Left = 432
-          Top = 53
-          Width = 97
-          Height = 42
-          Action = Cancel
-          Flat = True
-        end
-        object BirthDatePick: TDateTimePicker
-          Left = 120
-          Top = 40
-          Width = 186
-          Height = 21
-          Date = 44398.552664409720000000
-          Time = 44398.552664409720000000
-          Enabled = False
-          TabOrder = 0
-        end
-        object CreationDatePick: TDateTimePicker
-          Left = 120
-          Top = 72
-          Width = 186
-          Height = 21
-          Date = 44398.552664409720000000
-          Time = 44398.552664409720000000
-          Enabled = False
-          TabOrder = 1
-        end
         object PersonNameEdit: TLabeledEdit
-          Left = 121
-          Top = 13
-          Width = 408
+          Left = 120
+          Top = 4
+          Width = 377
           Height = 21
+          EditLabel.AlignWithMargins = True
           EditLabel.Width = 84
           EditLabel.Height = 13
           EditLabel.Caption = #1060#1048#1054' '#1087#1072#1094#1080#1077#1085#1090#1072
@@ -299,124 +49,39 @@ object OperatorForm: TOperatorForm
           EditLabel.Font.Style = [fsBold]
           EditLabel.ParentFont = False
           LabelPosition = lpLeft
-          LabelSpacing = 28
+          LabelSpacing = 25
+          TabOrder = 0
+          OnKeyPress = PersonNameEditKeyPress
+        end
+        object BirthdatePick: TDateTimePicker
+          Left = 120
+          Top = 37
+          Width = 217
+          Height = 21
+          Date = 44404.577251261570000000
+          Time = 44404.577251261570000000
+          TabOrder = 1
+        end
+        object CreationdatePick: TDateTimePicker
+          Left = 120
+          Top = 64
+          Width = 217
+          Height = 21
+          Date = 44404.577251261570000000
+          Time = 44404.577251261570000000
           TabOrder = 2
         end
       end
     end
   end
-  object FindPanel: TPanel
-    Left = 0
-    Top = 0
-    Width = 934
-    Height = 202
-    Align = alClient
-    Caption = 'FindPanel'
-    TabOrder = 1
-    ExplicitHeight = 201
+  inherited FindPanel: TPanel
+    ExplicitLeft = 184
+    ExplicitTop = 45
+    ExplicitHeight = 202
   end
-  object ActionList: TActionList
-    Images = ImageList1
-    Left = 528
-    Top = 32
-    object AddPerson: TAction
-      Caption = #1053#1086#1074#1099#1081' '#1087#1072#1094#1080#1077#1085#1090
-      ImageIndex = 2
-      OnExecute = AddPersonExecute
-    end
-    object FindPerson: TAction
-      Caption = #1055#1086#1080#1089#1082
-      ImageIndex = 4
-      Visible = False
-      OnExecute = FindPersonExecute
-    end
-    object AddSertificate: TAction
-      Caption = #1042#1099#1076#1072#1090#1100' '#1089#1087#1088#1072#1074#1082#1091
-      ImageIndex = 5
-      OnExecute = AddSertificateExecute
-    end
-    object SavePerson: TAction
-      Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100
-      ImageIndex = 1
-      OnExecute = SavePersonExecute
-    end
-    object Refresh: TAction
-      Caption = #1054#1073#1085#1086#1074#1080#1090#1100
-      ImageIndex = 9
-      Visible = False
-      OnExecute = RefreshExecute
-    end
-    object Cancel: TAction
-      Caption = #1054#1090#1084#1077#1085#1072
-      ImageIndex = 3
-      OnExecute = CancelExecute
-    end
-    object ShowCertificate: TAction
-      Caption = #1055#1086#1082#1072#1079#1072#1090#1100' '#1089#1087#1088#1072#1074#1082#1091
-      ImageIndex = 10
-      OnExecute = ShowCertificateExecute
-    end
-  end
-  object PersonsDataSource: TDataSource
-    DataSet = PersonsQuery
-    Left = 624
-    Top = 152
-  end
-  object Connection: TADOConnection
-    Connected = True
-    ConnectionString = 
-      'Provider=OraOLEDB.Oracle.1;Password=password;Persist Security In' +
-      'fo=True;User ID=hr;Data Source=orcl'
-    LoginPrompt = False
-    Provider = 'OraOLEDB.Oracle.1'
-    Left = 624
-    Top = 104
-  end
-  object PersonsQuery: TADOQuery
-    Active = True
-    Connection = Connection
-    CursorType = ctStatic
-    AfterScroll = PersonsQueryAfterScroll
-    Parameters = <>
-    Prepared = True
-    SQL.Strings = (
-      'SELECT *  FROM '
-      '(SELECT * FROM PERSONS ORDER BY CREATIONDATE DESC)'
-      'WHERE ROWNUM <= 10'
-      'ORDER BY ID')
-    Left = 576
-    Top = 152
-  end
-  object CertQuery: TADOQuery
-    Connection = Connection
-    DataSource = PersonsDataSource
-    Parameters = <
-      item
-        Name = 'Person_ID'
-        Size = -1
-        Value = Null
-      end>
-    SQL.Strings = (
-      
-        'select certificate_name, certificate_text, to_char(creationdate,' +
-        ' '#39'dd.mm.yyyy'#39') as creationdate from Certificates where Person_ID' +
-        ' = :Person_ID'
-      'order by creationdate')
-    Left = 752
-    Top = 144
-  end
-  object CertDataSource: TDataSource
-    DataSet = CertQuery
-    Left = 704
-    Top = 144
-  end
-  object ImageList1: TImageList
-    Height = 24
-    Width = 24
-    Left = 576
-    Top = 32
+  inherited ImageList1: TImageList
     Bitmap = {
-      494C01010B003800980018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010B0038009C0018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000060000000480000000100200000000000006C
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1313,5 +978,9 @@ object OperatorForm: TOperatorForm
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000}
+  end
+  inherited Connection: TADOConnection
+    Left = 784
+    Top = 64
   end
 end

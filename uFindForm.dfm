@@ -99,6 +99,7 @@ object PersonFindForm: TPersonFindForm
         MaxLength = 250
         TabOrder = 0
         OnKeyPress = SearchEditKeyPress
+        ExplicitTop = 5
       end
     end
     object ResultGrid: TDBGrid

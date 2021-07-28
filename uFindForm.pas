@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, DB, ADODB, Grids, DBGrids, Buttons,
-  uErrorMessages, widestrutils, StrUtils;
+  uResources, StrUtils;
 
 type
   TPersonFindForm = class(TForm)
@@ -36,9 +36,7 @@ implementation
 
 {$R *.dfm}
 
-const
-    CAS: WideString = 'абвгдеЄжзийклмнопрстуфхцчшщъыьэю€…÷” ≈Ќ√Ўў«’Џ‘џ¬јѕ–ќЋƒ∆Ёя„—ћ»“№Ѕё®';
-
+// формирование и выполнение поискового запроса
 procedure TPersonFindForm.SearchQuery(name: string);
 begin
     if SearchADOQuery.Active then
@@ -89,9 +87,7 @@ begin
 end;
 
 procedure TPersonFindForm.SearchEditKeyPress(Sender: TObject; var Key: char);
-var s: string;
 var LA: set of Char;
-    CA: array [0..255] of char;
 begin
     // старт поиска по нажатию Enter
     if ord(key) = VK_RETURN then
@@ -100,7 +96,7 @@ begin
     // только латиница (под вопросом) и кириллица
     // Latin alphabet
     LA := ['A'..'z'] + ['-'];
-    if not ((Key in LA) or (containsStr(CAS, Key)) or (Key = chr(VK_BACK))) then
+    if not ((Key in LA) or (containsStr(CyrillicAlphabeth, Key)) or (Key = chr(VK_BACK))) then
         Key := #0;
 end;
 
