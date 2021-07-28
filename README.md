@@ -1,4 +1,5 @@
 # test-ARM
-test project
+Шмаков Даниил - тестовое задание
 
-Delphi XE + Oracle DB v. 11g
+1. Используется Delphi XE, компоненты ADO (сандартные).
+2. БД - oracle 11g, БД orcl, логин/пароль по умолчанию: hr/password
