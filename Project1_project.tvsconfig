@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<TgConfig Version="3" SubLevelDisabled="False">
-  <Option Name="namespaceFolder.uSertForm" Type="System.String" Value="" Category="General" IsBrowsable="False" />
-  <Option Name="namespaceFolder.uStatistForm" Type="System.String" Value="uStatistForm" Category="General" IsBrowsable="False" />
-  <Option Name="namespaceFolder.uСertForm" Type="System.String" Value="uСertForm" Category="General" IsBrowsable="False" />
-  <Option Name="namespaceFolder.uResources" Type="System.String" Value="" Category="General" IsBrowsable="False" />
-  <Option Name="namespaceFolder.uOperatorForm" Type="System.String" Value="" Category="General" IsBrowsable="False" />
-  <Option Name="namespaceFolder.uErrorMessages" Type="System.String" Value="uErrorMessages" Category="General" IsBrowsable="False" />
-</TgConfig>
